@@ -4,6 +4,7 @@ require('dotenv').config({
 
 const app = require('./app');
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 
 app.listen(process.env.PORT || 3000);
 

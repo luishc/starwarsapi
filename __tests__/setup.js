@@ -3,6 +3,7 @@ require('dotenv').config({
 });
 
 const mongoose = require('mongoose');
+mongoose.set('useCreateIndex', true);
 
 beforeAll(function(){
   mongoose.connect(
