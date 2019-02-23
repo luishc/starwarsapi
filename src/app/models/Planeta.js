@@ -4,7 +4,8 @@ const swapi = require('swapi-node');
 
 var planetaSchema = new Schema({
     nome: {
-        type: String
+        type: String,
+        required: true
     },
     clima: {
         type: String

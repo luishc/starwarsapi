@@ -2,7 +2,7 @@ const Planeta = require('../../src/app/models/Planeta');
 
 describe('Planet', () =>{
     it('should get number of appearances in films of exinting planet', async () =>{
-        let planeta = await Planeta.create({
+        const planeta = await Planeta.create({
             nome: 'Alderaan',
             clima: 'temperate',
             terreno: 'grasslands, mountains'
@@ -15,7 +15,7 @@ describe('Planet', () =>{
     });
 
     it('should not contains number of appearances in films of planet that doesnt extist', async () =>{
-        let planeta = await Planeta.create({
+        const planeta = await Planeta.create({
             nome: 'Terra',
             clima: 'temperate',
             terreno: 'grasslands, mountains'
