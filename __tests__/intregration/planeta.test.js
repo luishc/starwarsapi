@@ -1,6 +1,6 @@
 const app = require('../../src/app');
 const request = require('supertest');
-const Planeta = require('../../src/app/models/Planeta');
+const factory = require('../utils/factory');
 
 describe('Planeta API', () =>{
     it('should save a new planet', async () => {
@@ -23,18 +23,12 @@ describe('Planeta API', () =>{
     });
 
     it('should not save a planet thar already exists', async () => {
-        var planet = {
-            nome: 'Teste duplicate 2',
-            clima: 'temperate',
-            terreno: 'grasslands, mountains'
-        }
-        
-        var planeta = await Planeta.create(planet);
+        const planetMock = await factory.create('Planet');
 
         const secondResponse = await request(app)
             .post('/planetas')
-            .send(planet);
+            .send(planetMock);
 
         expect(secondResponse.status).toBe(500);
     });
-})
+});
