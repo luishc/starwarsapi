@@ -35,7 +35,7 @@ describe('Planeta API', () =>{
         });
     });
 
-    describe('List planets', () => {
+    describe('List planets, find and delete a planet', () => {
         it('should return a list of planets', async () => {
             const planets = planetList.generatePlanets(5);
             await factory.createMany('Planet', 5, planets);
@@ -45,15 +45,46 @@ describe('Planeta API', () =>{
 
             expect(response.status).toBe(200);
         });
-    });
 
-    describe('List planets error', () => {
-        
-        it('should return a list of planets', async () => {
+        it('should return a planets searching by name', async () => {
+            const planets = planetList.generatePlanets(5);
+            const planetsMock = await factory.createMany('Planet', 5, planets);
+
             const response = await request(app)
-                .get('/planetas');
+                .get('/planetas?nome='+ planetsMock[0].nome);
 
             expect(response.status).toBe(200);
         });
+
+        it('should return a planets searching by id', async () => {
+            const planets = planetList.generatePlanets(5);
+            const planetsMock = await factory.createMany('Planet', 5, planets);
+
+            const response = await request(app)
+                .get('/planetas?id='+ planetsMock[0]._id);
+
+            expect(response.status).toBe(200);
+        });
+
+        it('should delete a planet', async () => {
+            const planets = planetList.generatePlanets(5);
+            const planetsMock = await factory.createMany('Planet', 5, planets);
+    
+            const response = await request(app)
+                .delete('/planetas/' + planetsMock[0]._id);
+    
+            expect(response.status).toBe(200);
+        });
+
+        it('should get an error when try to delete planet that dont exist', async () => {
+            const planets = planetList.generatePlanets(5);
+            const planetsMock = await factory.createMany('Planet', 5, planets);
+    
+            const response = await request(app)
+                .delete('/planetas/123123');
+    
+            expect(response.status).toBe(500);
+        });
     });
+
 });
